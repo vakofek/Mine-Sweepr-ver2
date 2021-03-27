@@ -1,0 +1,55 @@
+body {
+    background-color: rgb(31, 85, 156);
+    text-align: center;
+}
+
+.info-area {
+    background-color: wheat;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timer {
+    margin-right: 100px
+}
+
+.flag {
+    margin-left: 100px;
+}
+
+.smiley-area {
+    /* background-color: white; */
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.life {
+    margin-right: 200px;
+    font-size: 30px;
+}
+
+.smiley-mode {
+    font-size: 50px;
+}
+
+.hint {
+    margin-left: 200px;
+    font-size: 30px;
+}
+
+button {
+    border-radius: 10% solid;
+    margin: 30px;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table td {
+    width: 40px;
+    height: 40px;
+}
