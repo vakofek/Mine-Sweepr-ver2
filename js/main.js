@@ -16,6 +16,10 @@ var gLevel = {
 var gGame;
 var gBoard;
 var gHintCells;
+var gMoves;
+var gPlayers = [];
+var gPlayer;
+
 
 
 function init() {
@@ -26,11 +30,13 @@ function init() {
     updateSafeClick();
     updateFlagNum();
     createBoard();
+    renderScoresTable(getLevel());
 }
 
 function reset() {
     gGame = {
         isOn: false,
+        gameOver: false,
         isHintMode: false,
         shownCount: 0,
         markedCount: 0,
@@ -38,9 +44,18 @@ function reset() {
         life: 3,
         hint: 3,
         safeConunt: 3,
-        flagNum: gLevel.MINES
+        flagNum: gLevel.MINES,
+        hitMine: 0,
+        moveNum: 0
     };
+    gPlayer = {
+        name: '',
+        gameTime: 0,
+        level: getLevel()
+    };
+    gMoves = [];
     updateSmileyMode('Normal');
+    // stopClick('');
 }
 
 function createBoard() {
@@ -67,11 +82,9 @@ function createBoard() {
     var elBoard = document.querySelector('.board');
     elBoard.innerHTML = strHTML;
     console.table(board);
-    // renderBoard();
 }
 
 function renderBoard() {
-    // debugger;
     var strHTML = '';
     var cellType;
     for (var i = 0; i < gBoard.length; i++) {
@@ -89,6 +102,7 @@ function renderBoard() {
 
 
 function setLevel(elBtn, minesNum) {
+    // debugger;
     gLevel.SIZE = elBtn.value
     gLevel.MINES = minesNum;
     init();
@@ -99,6 +113,10 @@ function cellClicked(elCell, i, j) {
         renderTimer();
         gGame.isOn = true;
         setMines(i, j);
+    }
+    if (gGame.gameOver) {
+        elCell.onclick = false;
+        return;
     }
     if (gBoard[i][j].isShown) return;
     gBoard[i][j].isShown = true;
@@ -113,12 +131,20 @@ function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isMine) {
         gGame.life--;
         elCell.style.backgroundColor = 'red';
+        gGame.hitMine++;
+        gGame.flagNum--;
+        updateFlagNum();
         updateLife();
         checkGameOver();
     }
     gGame.shownCount++;
+    // gMoves.push({
+    //     mode: 'click',
+    //     cellElement: elCell
+    // });
     renderBoard();
     checkGameOver();
+    // console.log('gMoves', gMoves);
 }
 
 function cellMarked(elCell, i, j) {
@@ -127,6 +153,10 @@ function cellMarked(elCell, i, j) {
         renderTimer();
         gGame.isOn = true;
         setMines(i, j);
+    }
+    if (gGame.gameOver) {
+        elCell.onclick = false;
+        return;
     }
     if (gBoard[i][j].cellType === FLAG) {
         if (gBoard[i][j].isMine) gBoard[i][j].cellType = MINE;
@@ -199,14 +229,23 @@ function expandShown(idx, jdx) {
 
 function checkGameOver() {
     // debugger;
-    if (gGame.life === 0) {
+    if (gGame.life === 0 || gGame.hitMine === gLevel.MINES) {
         // alert('GAME OVER! - YOU LOSE');
+        gGame.gameOver = true;
+        // stopClick();
         updateSmileyMode('Lose');
         resetTimer();
     }
     else if ((gGame.shownCount + gGame.markedCount) === (gLevel.SIZE ** 2)) {
         // alert('GAME OVER! - YOU WIN');
         updateSmileyMode('Win');
+        gGame.gameOver = true;
+        gPlayer.gameTime = gGame.secPassed;
+        gPlayers.push(gPlayer);
+        console.log('userName ', gPlayer.name, 'win the game after', gPlayer.gameTime, 'sec');
+        console.log('players', gPlayers);
+        // stopClick();
+        renderScoresTable(getLevel());
         resetTimer();
     }
 }
@@ -271,13 +310,13 @@ function safeClick() {
         idx = getRandomInt(0, gLevel.SIZE - 1);
         jdx = getRandomInt(0, gLevel.SIZE - 1);
     }
-    drawSafeCell(idx, jdx, 'green');
+    drawSafeCell(idx, jdx, 'white');
     setTimeout(function () { drawSafeCell(idx, jdx, ''); }, 2000);
     gGame.safeConunt--;
     updateSafeClick();
 }
 function updateSafeClick() {
-    document.querySelector('.safe-click-msg').innerHTML = `${gGame.safeConunt} clicks avaliable`;
+    document.querySelector('.safe-click-msg').innerHTML = `${gGame.safeConunt} more left`;
 }
 
 function drawSafeCell(idx, jdx, color) {
@@ -297,6 +336,40 @@ function updateSmileyMode(mode) {
             break;
 
         default:
+            break;
+    }
+}
+
+function setUserName() {
+    gPlayer.name = document.querySelector('.user-name').value;
+}
+
+function renderScoresTable(level) {
+    gPlayers.sort();
+    var strHTML = '<tr><td>Player name</td><td>Game time (sec)</td></tr>';
+    for (var i = 0; i < gPlayers.length; i++) {
+        if (gPlayers[i].level === level) {
+            strHTML += `<tr><td>${gPlayers[i].name}</td>`;
+            strHTML += `<td>${gPlayers[i].gameTime}</td></tr>`;
+        }
+    }
+    var elCell = document.querySelector('.scores');
+    elCell.innerHTML = strHTML;
+}
+
+function getLevel() {
+    switch (gLevel.SIZE) {
+        case 4:
+            return 'Begginer';
+            break;
+        case '4':
+            return 'Begginer';
+            break;
+        case '8':
+            return 'Medium';
+            break;
+        case '12':
+            return 'Expert';
             break;
     }
 }

@@ -1,20 +1,26 @@
 <html>
-
-<head>
-    <title>Mine Sweeper</title>
-    <link rel="stylesheet" href="./css/main.css">
-</head>
-
-<body onload="init()">
-    <h1>Mine Sweeper</h1>
-    <div>
-        <button type="button" value="4" onclick="setLevel(this,2)">Begginer (4X4)</button>
-        <button type="button" value="8" onclick="setLevel(this,12)">Medium (8X8)</button>
-        <button type="button" value="12" onclick="setLevel(this,30)">Expert (12X12)</button>
-    </div>
-    <div class="info-area">
-        <span class="timer">Time: 00:00 </span>
-        <span class="flags"></span>
+    
+    <head>
+        <title>Mine Sweeper</title>
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    
+    <body onload="init()">
+        <h1>Mine Sweeper</h1>
+        <div>
+            <span class="name-span">Enter your name: </span>
+            <input type="text" class="user-name" value="">
+            <button type="submit" onclick="setUserName()">Submit</button>
+        </div>
+        <div class="level">
+            <button type="button" value="4" onclick="setLevel(this,2)">Begginer (4X4)</button>
+            <button type="button" value="8" onclick="setLevel(this,12)">Medium (8X8)</button>
+            <button type="button" value="12" onclick="setLevel(this,30)">Expert (12X12)</button>
+        </div>
+        <div class="info-area">
+            <span class="timer">Time: 00:00 </span>
+            <span class="flags"></span>
+        </div>
     </div>
     <div class="smiley-area">
         <span class="life"></span>
@@ -22,7 +28,7 @@
         <span class="hint" onclick="getHint()"></span>
     </div>
     <div>
-        <button onclick="safeClick()">Safe-Click</button>
+        <button class="safe" onclick="safeClick()">Safe-Click</button>
         <span class="safe-click-msg"></span>
     </div>
     <div>
@@ -30,12 +36,17 @@
             <tbody class="board"></tbody>
         </table>
     </div>
-
-
-
-    <script src="js/util.js"></script>
-    <script src="js/timer.js"></script>
-    <script src="js/main.js"></script>
-</body>
+    <table class="players-table" border="1" cellpadding="10">
+        <tbody class="scores">
+        </tbody>
+    </table>
+    <div>
+        
+        
+        
+        <script src="js/util.js"></script>
+        <script src="js/timer.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 
 </html>

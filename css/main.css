@@ -1,13 +1,29 @@
 body {
     background-color: rgb(31, 85, 156);
+    /* background-color: rgb(88, 90, 94); */
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
+h1 {
+    font-size: 50px;
+}
+
+.name-span{
+    font-size: 20px;
+}
+.level button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .info-area {
-    background-color: wheat;
+    background-color: coral;
     width: 500px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 30px;
 }
 
 .timer {
@@ -19,7 +35,6 @@ body {
 }
 
 .smiley-area {
-    /* background-color: white; */
     width: 800px;
     margin-left: auto;
     margin-right: auto
@@ -28,28 +43,64 @@ body {
 .life {
     margin-right: 200px;
     font-size: 30px;
+    cursor:pointer
 }
 
 .smiley-mode {
     font-size: 50px;
+    cursor:pointer
 }
 
 .hint {
     margin-left: 200px;
     font-size: 30px;
+    cursor:pointer
 }
 
 button {
     border-radius: 10% solid;
     margin: 30px;
+    cursor:pointer;
+    background-color: rgb(155, 166, 180);
+    font-size: 20px;
+    width: 200px;
 }
+
+.safe{
+    width: 150px;
+    height: 50px;
+    background-color: coral;
+}
+
+.safe-click-msg{
+    font-size: 25px;
+    text-align: center;
+}
+
 
 table {
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    border: white 1px solid;
 }
 
 .table td {
     width: 40px;
     height: 40px;
+    color: white;
+    font-weight: bold;
+    cursor:pointer
+}
+
+.players-table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    font-weight: bold;
+    color: white;
+}
+
+.players-table td{
+    width: 200px;
 }
